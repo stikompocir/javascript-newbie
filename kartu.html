@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Remi</title>
+</head>
+<body>
+    <h1>Game Kartu Remi</h1>
+    <button onclick="shuffleDeck(deck); displayDeck();">Kocok Kartu</button>
+    <button onclick="drawCardAndDisplay();">Tarik Kartu</button>
+    <p id="drawnCard">Tarik kartu untuk melihat hasilnya.</p>
+    <p id="remainingCards">Sisa kartu di deck: 52</p>
+
+    <script>
+        const suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
+        const values = [
+            "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"
+        ];
+
+        function createDeck() {
+            let deck = [];
+            for (let suit of suits) {
+                for (let value of values) {
+                    deck.push(`${value} of ${suit}`);
+                }
+            }
+            return deck;
+        }
+
+        function shuffleDeck(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+
+        function drawCard(deck) {
+            return deck.pop();
+        }
+
+        function displayDeck() {
+            document.getElementById('remainingCards').textContent = `Sisa kartu di deck: ${deck.length}`;
+        }
+
+        function drawCardAndDisplay() {
+            if (deck.length === 0) {
+                document.getElementById('drawnCard').textContent = "Tidak ada kartu tersisa.";
+                return;
+            }
+            const drawnCard = drawCard(deck);
+            document.getElementById('drawnCard').textContent = `Kartu yang ditarik: ${drawnCard}`;
+            displayDeck();
+        }
+
+        let deck = createDeck();
+        displayDeck();
+    </script>
+</body>
+</html>
